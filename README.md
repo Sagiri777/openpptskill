@@ -5,59 +5,72 @@
 [![npm version](https://img.shields.io/npm/v/open-kimi-ppt-skills)](https://www.npmjs.com/package/open-kimi-ppt-skills)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 
-逆向 Kimi Slides 实现的非官方演示文稿 Skill：让 AI Coding Agent 能够创建、编辑、复刻、读取并导出 PPT/PPTX。**每次生成默认同时交付两份成果：可继续编辑的 PPTD 项目和开箱即用的 PPTX 成品**（自动嵌入字体、写入淡入淡出切换动画），并提供本地在线 PPTD 编辑器支持随时手动导出。支持 Codex、Claude Code、Cursor、CodeBuddy 等任何兼容 SKILL.md 规范的 Agent。
+逆向 Kimi Slides 实现的非官方演示文稿 Skill：让 AI Coding Agent 能够创建、编辑、复刻、读取并导出 PPT/PPTX。**每次生成默认同时交付两份成果：可继续编辑的 PPTD 项目和开箱即用的 PPTX 成品**（自动嵌入字体、写入淡入淡出切换动画），并提供本地在线 PPTD 编辑器支持随时手动导出。支持 Codex、Claude Code、Cursor、WorkBuddy 等任何兼容 SKILL.md 规范的 Agent。
 
 > [!IMPORTANT]
 > 本项目通过逆向分析 Kimi Slides Skill、PPTD 格式以及公开网页编辑器的前端行为与通信协议实现，并非 Kimi 或 Moonshot AI 的官方项目，也未获得其认可或支持。项目依赖的公开前端资源和兼容协议可能随 Kimi 更新而失效，仅供学习与研究使用。
 
 ## 安装
 
-需要 Node.js 18 或更高版本。也可以直接对 AI 说：`帮我从 github 安装 open-kimi-ppt skills`，或者说：`帮我安装 https://github.com/Binaryify/open-kimi-ppt-skill`。
+需要 Node.js 18 或更高版本。
 
-直接通过 npx 安装：
+**二选一即可，不要两种都做**，否则容易装到多个目录、反复安装。默认会装到跨 Agent 通用目录 `~/.agents/skills/open-kimi-ppt`（Windows 为 `%USERPROFILE%\.agents\skills\open-kimi-ppt`）；多数支持该目录的 Agent 装一次就能用。
+
+### 方式一：自动安装（推荐）
+
+直接对 AI 说下面任意一句，让 Agent 帮你装：
+
+```text
+帮我从 github 安装 open-kimi-ppt skills
+```
+
+```text
+帮我安装 https://github.com/Binaryify/open-kimi-ppt-skill
+```
+
+装完后一般无需再手动执行 `npx ... install`。
+
+### 方式二：手动安装
+
+自己在终端执行：
 
 ```bash
 npx open-kimi-ppt-skills install
 ```
 
-也可以先全局安装 CLI：
-
-```bash
-npm install --global open-kimi-ppt-skills
-open-kimi-ppt-skills install
-```
-
-默认安装到跨 Agent 的通用目录 `~/.agents/skills/open-kimi-ppt`，支持该目录的 Agent 可直接发现。如果你的 Agent 使用专属 Skills 目录，可通过 `--target` 指定：
+仅当你的 Agent **不识别** `~/.agents/skills`、必须装到专属目录时，才加 `--target`（以下为 macOS / Linux；Windows 将 `~` 换成 `%USERPROFILE%`，例如 `%USERPROFILE%\.codex\skills`）：
 
 ```bash
 # Codex
-open-kimi-ppt-skills install --target ~/.codex/skills
+npx open-kimi-ppt-skills install --target ~/.codex/skills
 
 # Claude Code
-open-kimi-ppt-skills install --target ~/.claude/skills
+npx open-kimi-ppt-skills install --target ~/.claude/skills
 
 # Cursor
-open-kimi-ppt-skills install --target ~/.cursor/skills
+npx open-kimi-ppt-skills install --target ~/.cursor/skills
 
-# CodeBuddy
-open-kimi-ppt-skills install --target ~/.codebuddy/skills
+# WorkBuddy
+npx open-kimi-ppt-skills install --target ~/.workbuddy/skills
 ```
+
+> 不要默认对每个 Agent 各装一遍。先用默认目录；确认某个 Agent 发现不了 Skill 时，再对该 Agent 使用 `--target`。
 
 ### 更新
 
-Skill 有更新时，用 `--force` 覆盖本地已安装版本即可：
+Skill 有更新时，用 `--force` 覆盖本地已安装版本即可（不要重复执行无 `--force` 的 install）：
 
 ```bash
 npx open-kimi-ppt-skills@latest install --force
 ```
 
-若安装时指定过 `--target`，更新时带上相同路径：
+若当初用过 `--target`，更新时带上相同路径：
 
 ```bash
 npx open-kimi-ppt-skills@latest install --force --target ~/.claude/skills
 ```
 
-也可以直接对 AI 说：`帮我更新 open-kimi-ppt skill`。更新只替换 Skill 文件，不会影响你已生成的 PPTD / PPTX 项目。
+也可以对 AI 说：`帮我更新 open-kimi-ppt skill`。更新只替换 Skill 文件，不会影响已生成的 PPTD / PPTX 项目。
 
 ## 使用
 
@@ -91,7 +104,13 @@ npx open-kimi-ppt-skills@latest install --force --target ~/.claude/skills
 
 ### 在线编辑与手动导出
 
-启动本地编辑器：
+建议直接让 AI 启动本地编辑器，例如说：
+
+```text
+帮我执行 npx open-kimi-ppt-skills serve
+```
+
+也可以自己在终端运行：
 
 ```bash
 npx open-kimi-ppt-skills serve
@@ -143,7 +162,7 @@ npx open-kimi-ppt-skills serve --port 56000
 
 [![DeepSeek 生成 Liquid Glass 风格 PPT](docs/images/example-deepseek-liquid-glass.png)](docs/images/example-deepseek-liquid-glass.png)
 
-*上图：在 CodeBuddy / WorkBuddy 中使用 DeepSeek-V4-Flash 生成 Apple Liquid Glass 风格 PPT 的实际效果。*
+*上图：在 WorkBuddy 中使用 DeepSeek-V4-Flash 生成 Apple Liquid Glass 风格 PPT 的实际效果。*
 
 ### 关于风格与主题
 

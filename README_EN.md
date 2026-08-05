@@ -5,47 +5,60 @@
 [![npm version](https://img.shields.io/npm/v/open-kimi-ppt-skills)](https://www.npmjs.com/package/open-kimi-ppt-skills)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 
-An unofficial presentation skill for AI coding agents, reverse-engineered from Kimi Slides. It lets your agent create, edit, replicate, read, and export PPT/PPTX files. **Every run delivers two outputs by default: an editable PPTD project and a ready-to-use PPTX** — fonts embedded and fade transitions included — plus a local in-browser PPTD editor with manual PPTX export. Works with Codex, Claude Code, Cursor, CodeBuddy, and any agent that supports the SKILL.md format.
+An unofficial presentation skill for AI coding agents, reverse-engineered from Kimi Slides. It lets your agent create, edit, replicate, read, and export PPT/PPTX files. **Every run delivers two outputs by default: an editable PPTD project and a ready-to-use PPTX** — fonts embedded and fade transitions included — plus a local in-browser PPTD editor with manual PPTX export. Works with Codex, Claude Code, Cursor, WorkBuddy, and any agent that supports the SKILL.md format.
 
 > [!IMPORTANT]
 > This project is implemented by reverse-engineering the Kimi Slides skill, the PPTD format, and the frontend behavior and communication protocol of the publicly accessible web editor. It is not an official Kimi or Moonshot AI project and is not endorsed or supported by them. Public frontend resources and compatibility contracts used by this project may change without notice. Provided for learning and research purposes only.
 
 ## Install
 
-Node.js 18 or later is required. You can also ask your agent: `Install the open-kimi-ppt skills from GitHub for me.`, or: `Install https://github.com/Binaryify/open-kimi-ppt-skill for me.`
+Node.js 18 or later is required.
 
-Install directly with npx:
+**Pick one method — do not run both**, or you may end up with duplicate installs across directories. By default the skill lands in the shared directory `~/.agents/skills/open-kimi-ppt` (Windows: `%USERPROFILE%\.agents\skills\open-kimi-ppt`). For most agents that discover that path, a single install is enough.
+
+### Option 1: Automatic install (recommended)
+
+Ask your agent with either of these prompts and let it install for you:
+
+```text
+Install the open-kimi-ppt skills from GitHub for me.
+```
+
+```text
+Install https://github.com/Binaryify/open-kimi-ppt-skill for me.
+```
+
+After that, you usually do **not** need to run `npx ... install` yourself.
+
+### Option 2: Manual install
+
+Run this in your terminal:
 
 ```bash
 npx open-kimi-ppt-skills install
 ```
 
-Alternatively, install the CLI globally:
-
-```bash
-npm install --global open-kimi-ppt-skills
-open-kimi-ppt-skills install
-```
-
-By default the installer targets the shared, agent-agnostic directory `~/.agents/skills/open-kimi-ppt`, which compatible agents discover directly. If your agent uses its own skills directory, point `--target` at it:
+Only add `--target` if your agent **does not** pick up `~/.agents/skills` and must use its own skills directory (paths below are for macOS / Linux; on Windows replace `~` with `%USERPROFILE%`, e.g. `%USERPROFILE%\.codex\skills`):
 
 ```bash
 # Codex
-open-kimi-ppt-skills install --target ~/.codex/skills
+npx open-kimi-ppt-skills install --target ~/.codex/skills
 
 # Claude Code
-open-kimi-ppt-skills install --target ~/.claude/skills
+npx open-kimi-ppt-skills install --target ~/.claude/skills
 
 # Cursor
-open-kimi-ppt-skills install --target ~/.cursor/skills
+npx open-kimi-ppt-skills install --target ~/.cursor/skills
 
-# CodeBuddy
-open-kimi-ppt-skills install --target ~/.codebuddy/skills
+# WorkBuddy
+npx open-kimi-ppt-skills install --target ~/.workbuddy/skills
 ```
+
+> Do not install once per agent by default. Start with the shared directory; only use `--target` for an agent that cannot discover the skill there.
 
 ### Update
 
-When the skill is updated, overwrite your local install with `--force`:
+When the skill is updated, overwrite the local install with `--force` (do not keep re-running install without `--force`):
 
 ```bash
 npx open-kimi-ppt-skills@latest install --force
@@ -73,7 +86,13 @@ Use open-kimi-ppt to create a liquid-glass-style deck about the history of Apple
 
 ### Edit online and export manually
 
-Start the local editor:
+Prefer asking your agent to start the local editor, for example:
+
+```text
+Run npx open-kimi-ppt-skills serve for me.
+```
+
+Or run it yourself in a terminal:
 
 ```bash
 npx open-kimi-ppt-skills serve
@@ -125,7 +144,7 @@ In short:
 
 [![DeepSeek generating a Liquid Glass-style PPT](docs/images/example-deepseek-liquid-glass.png)](docs/images/example-deepseek-liquid-glass.png)
 
-*Above: an Apple Liquid Glass-style deck generated with DeepSeek-V4-Flash in CodeBuddy / WorkBuddy.*
+*Above: an Apple Liquid Glass-style deck generated with DeepSeek-V4-Flash in WorkBuddy.*
 
 ### Style and themes
 
