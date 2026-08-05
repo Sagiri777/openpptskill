@@ -84,6 +84,14 @@ For more stable quality, put a style in the prompt (e.g. “dark product-launch 
 Use open-kimi-ppt to create a liquid-glass-style deck about the history of Apple.
 ```
 
+**Example: iPhone 17 Pro (~8 pages)**
+
+```text
+Use open-kimi-ppt to create an iPhone 17 Pro intro PPT.
+```
+
+[![iPhone 17 Pro](docs/images/example-iphone-17pro.png)](docs/images/example-iphone-17pro.png)
+
 ### Edit online and export manually
 
 Prefer asking your agent to start the local editor, for example:

@@ -102,6 +102,14 @@ npx open-kimi-ppt-skills@latest install --force --target ~/.claude/skills
 | :---: | :---: |
 | [![DJI Pocket 4 在线编辑](docs/images/example-dji-pocket4-editor.png)](docs/images/example-dji-pocket4-editor.png) | [![DJI Pocket 4 导出 PPTX](docs/images/example-dji-pocket4-pptx.png)](docs/images/example-dji-pocket4-pptx.png) |
 
+**示例 3：iPhone 17 Pro（约 8 页）**
+
+```text
+使用 open-kimi-ppt 制作 iPhone 17 Pro 介绍 PPT
+```
+
+[![iPhone 17 Pro](docs/images/example-iphone-17pro.png)](docs/images/example-iphone-17pro.png)
+
 ### 在线编辑与手动导出
 
 建议直接让 AI 启动本地编辑器，例如说：
