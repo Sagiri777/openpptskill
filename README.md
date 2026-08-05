@@ -10,76 +10,6 @@
 > [!IMPORTANT]
 > 本项目通过逆向分析 Kimi Slides Skill、PPTD 格式以及公开网页编辑器的前端行为与通信协议实现，并非 Kimi 或 Moonshot AI 的官方项目，也未获得其认可或支持。项目依赖的公开前端资源和兼容协议可能随 Kimi 更新而失效，仅供学习与研究使用。
 
-## 功能特性
-
-- **PPTD 生成**：让 Agent 生成完整、可继续编辑的 PPTD 项目，支持从零创作、风格迁移、模板复用、图片/PDF 复刻。
-- **PPTX 生成**：默认同步生成 PPTX 成品，自动嵌入字体并写入淡入淡出切换动画。
-- **视觉质检**：多模态模型在导出 PPTX 前自动导出整份页面图片、拼接总览图逐项核查（变形、遮挡、出界、对比度、排版、文字溢出），问题页面修复后复检，直至全部通过。
-- **在线编辑**：通过浏览器查看和编辑本地 PPTD 项目，自动保存，可配置页面切换动画。
-- **手动导出**：在编辑器中随时手动导出 PPTX。
-- **格式互转**：将现有 PPTX 转换为 PPTD 后继续修改。
-- **安全可控**：本地编辑仅在用户明确授权的项目目录内读写文件。
-
-## 为什么选 open-kimi-ppt
-
-常见 PPT Skill 大致分三类：用代码库直接拼 OOXML / pptxgenjs、整页生成图片再塞进 PPTX、或输出网页 HTML 翻页。open-kimi-ppt 走的是 **PPTD 中间层 + 真实可编辑 PPTX** 路线，兼顾 Agent 好写、人好看、PowerPoint 能改。
-
-| | open-kimi-ppt | 代码拼 PPTX（如 pptxgenjs） | 整页图片 PPT | 网页 HTML PPT |
-| --- | --- | --- | --- | --- |
-| 交付物 | PPTD 项目 + PPTX | 多为仅 PPTX | 多为仅 PPTX | 单文件 HTML |
-| Agent 友好度 | YAML 逐页描述，结构清晰 | 坐标/API 细节多，易排版翻车 | 依赖出图模型与提示词 | HTML/CSS 模板约束强 |
-| PowerPoint 可编辑 | 文本、形状、图片可继续改 | 可编辑，但难二次精修 | 整页位图，难改字 | 不是原生 PPTX |
-| 视觉质量 | 真实版式 + 导出前多模态质检 | 依赖 Agent 手调布局 | 画面统一，偏海报感 | 动效强，适合演示分享 |
-| 二次编辑 | 浏览器可视化编辑 + 自动保存 | 主要靠改代码重导出 | 基本需重新出图 | 改 HTML 源码 |
-| 适用场景 | 要交可改的正式 PPTX，又要好看 | 结构化汇报、模板填充 | 视觉统一的海报风讲稿 | 浏览器内演讲 / 发布会 |
-
-更具体地说，相对其他方案的优势是：
-
-1. **中间格式为 Agent 设计**：PPTD 用 YAML 描述主题、布局与元素，比直接写 OOXML / pptxgenjs 更稳，也比「整页渲一张图」更可局部修改。
-2. **默认同交两份成果**：可继续迭代的 PPTD 项目 + 开箱即用的 PPTX（嵌字体、淡入淡出切换），不是只给半成品。
-3. **PPTX 真能改**：导出后文本框、形状仍可在 PowerPoint / WPS 里编辑，不像图片型 PPT 只能当海报。
-4. **有本地可视化编辑器**：浏览器里预览、微调、配切换动画并手动再导出，不需要每次都让 Agent 重跑全流程。
-5. **导出前强制视觉质检**：整页截图 + 总览图检查遮挡、出界、对比度、溢出等问题，修完再出 PPTX。
-6. **不绑官方模型，成本更低**：相对官方 Kimi Slides，你可以在任意兼容 Agent 里使用 DeepSeek 等低成本模型；即便模型不支持多模态，只要按 PPTD 规范生成，也能做出不错的成品（有多模态时再做视觉质检会更稳）。
-
-[![DeepSeek 生成 Liquid Glass 风格 PPT](docs/images/example-deepseek-liquid-glass.png)](docs/images/example-deepseek-liquid-glass.png)
-
-*上图：在 CodeBuddy / WorkBuddy 中使用 DeepSeek-V4-Flash 生成 Apple Liquid Glass 风格 PPT 的实际效果。*
-
-### 关于风格与主题
-
-本 Skill **不预设固定主题或模板**。风格由你决定。
-
-> [!TIP]
-> **强烈建议在 Prompt 里写明 PPT 风格，或直接附上参考 PPT / PPTX 模板。** 有风格约束或模板参照时，出品会明显更好、更稳定；只给主题不给风格时，Agent 会自行发挥，效果容易波动。
-
-常见两种用法：
-
-1. **在 Prompt 里描述风格**：例如「深色科技风」「杂志排版」「苹果 liquid glass」「极简留白 + 大字报」等；
-2. **提供参考模板**：上传现有 PPT / PPTX / 截图，让 Agent 迁移配色、版式与风格。
-
-两者可以一起用：先给模板定调，再用一句话补充本次要强化的风格。
-
-## 界面预览
-
-| 在线编辑 PPTD | 导出 PPTX |
-| :---: | :---: |
-| [![在线编辑 PPTD](docs/images/editor-overview.png)](docs/images/editor-overview.png) | [![导出 PPTX](docs/images/export-pptx.png)](docs/images/export-pptx.png) |
-
-## 什么是 PPTD
-
-PPTD 是一种基于 YAML 的演示文稿 DSL，是 OOXML 之上的简化抽象层：保留主题、页面布局、元素位置等核心信息，去除了 Master 等复杂嵌套，每页自包含、所见即所得。完整的格式定义见 [reference/pptd.md](skills/open-kimi-ppt/reference/pptd.md)。
-
-一个完整的 PPTD 项目目录结构如下：
-
-```text
-deck/
-  deck.pptd     # 清单文件
-  pages/        # 每页一个 .page 文件
-  media/        # 本地媒体资源（如有）
-  deck.pptx     # 默认同步生成的 PPTX 成品
-```
-
 ## 安装
 
 需要 Node.js 18 或更高版本。也可以直接对 AI 说：`帮我从 github 安装 open-kimi-ppt skills`，或者说：`帮我安装 https://github.com/Binaryify/open-kimi-ppt-skill`。
@@ -178,6 +108,76 @@ npx open-kimi-ppt-skills serve --port 56000
 ```
 
 可写目录需要使用支持 File System Access API 的 Chromium 系浏览器；其他浏览器会回退为只读文件夹上传。按 `Ctrl+C` 停止服务。
+
+## 功能特性
+
+- **PPTD 生成**：让 Agent 生成完整、可继续编辑的 PPTD 项目，支持从零创作、风格迁移、模板复用、图片/PDF 复刻。
+- **PPTX 生成**：默认同步生成 PPTX 成品，自动嵌入字体并写入淡入淡出切换动画。
+- **视觉质检**：多模态模型在导出 PPTX 前自动导出整份页面图片、拼接总览图逐项核查（变形、遮挡、出界、对比度、排版、文字溢出），问题页面修复后复检，直至全部通过。
+- **在线编辑**：通过浏览器查看和编辑本地 PPTD 项目，自动保存，可配置页面切换动画。
+- **手动导出**：在编辑器中随时手动导出 PPTX。
+- **格式互转**：将现有 PPTX 转换为 PPTD 后继续修改。
+- **安全可控**：本地编辑仅在用户明确授权的项目目录内读写文件。
+
+## 为什么选 open-kimi-ppt
+
+常见 PPT Skill 大致分三类：用代码库直接拼 OOXML / pptxgenjs、整页生成图片再塞进 PPTX、或输出网页 HTML 翻页。open-kimi-ppt 走的是 **PPTD 中间层 + 真实可编辑 PPTX** 路线，兼顾 Agent 好写、人好看、PowerPoint 能改。
+
+| | open-kimi-ppt | 代码拼 PPTX（如 pptxgenjs） | 整页图片 PPT | 网页 HTML PPT |
+| --- | --- | --- | --- | --- |
+| 交付物 | PPTD 项目 + PPTX | 多为仅 PPTX | 多为仅 PPTX | 单文件 HTML |
+| Agent 友好度 | YAML 逐页描述，结构清晰 | 坐标/API 细节多，易排版翻车 | 依赖出图模型与提示词 | HTML/CSS 模板约束强 |
+| PowerPoint 可编辑 | 文本、形状、图片可继续改 | 可编辑，但难二次精修 | 整页位图，难改字 | 不是原生 PPTX |
+| 视觉质量 | 真实版式 + 导出前多模态质检 | 依赖 Agent 手调布局 | 画面统一，偏海报感 | 动效强，适合演示分享 |
+| 二次编辑 | 浏览器可视化编辑 + 自动保存 | 主要靠改代码重导出 | 基本需重新出图 | 改 HTML 源码 |
+| 适用场景 | 要交可改的正式 PPTX，又要好看 | 结构化汇报、模板填充 | 视觉统一的海报风讲稿 | 浏览器内演讲 / 发布会 |
+
+更具体地说，相对其他方案的优势是：
+
+1. **中间格式为 Agent 设计**：PPTD 用 YAML 描述主题、布局与元素，比直接写 OOXML / pptxgenjs 更稳，也比「整页渲一张图」更可局部修改。
+2. **默认同交两份成果**：可继续迭代的 PPTD 项目 + 开箱即用的 PPTX（嵌字体、淡入淡出切换），不是只给半成品。
+3. **PPTX 真能改**：导出后文本框、形状仍可在 PowerPoint / WPS 里编辑，不像图片型 PPT 只能当海报。
+4. **有本地可视化编辑器**：浏览器里预览、微调、配切换动画并手动再导出，不需要每次都让 Agent 重跑全流程。
+5. **导出前强制视觉质检**：整页截图 + 总览图检查遮挡、出界、对比度、溢出等问题，修完再出 PPTX。
+6. **不绑官方模型，成本更低**：相对官方 Kimi Slides，你可以在任意兼容 Agent 里使用 DeepSeek 等低成本模型；即便模型不支持多模态，只要按 PPTD 规范生成，也能做出不错的成品（有多模态时再做视觉质检会更稳）。
+
+[![DeepSeek 生成 Liquid Glass 风格 PPT](docs/images/example-deepseek-liquid-glass.png)](docs/images/example-deepseek-liquid-glass.png)
+
+*上图：在 CodeBuddy / WorkBuddy 中使用 DeepSeek-V4-Flash 生成 Apple Liquid Glass 风格 PPT 的实际效果。*
+
+### 关于风格与主题
+
+本 Skill **不预设固定主题或模板**。风格由你决定。
+
+> [!TIP]
+> **强烈建议在 Prompt 里写明 PPT 风格，或直接附上参考 PPT / PPTX 模板。** 有风格约束或模板参照时，出品会明显更好、更稳定；只给主题不给风格时，Agent 会自行发挥，效果容易波动。
+
+常见两种用法：
+
+1. **在 Prompt 里描述风格**：例如「深色科技风」「杂志排版」「苹果 liquid glass」「极简留白 + 大字报」等；
+2. **提供参考模板**：上传现有 PPT / PPTX / 截图，让 Agent 迁移配色、版式与风格。
+
+两者可以一起用：先给模板定调，再用一句话补充本次要强化的风格。
+
+## 界面预览
+
+| 在线编辑 PPTD | 导出 PPTX |
+| :---: | :---: |
+| [![在线编辑 PPTD](docs/images/editor-overview.png)](docs/images/editor-overview.png) | [![导出 PPTX](docs/images/export-pptx.png)](docs/images/export-pptx.png) |
+
+## 什么是 PPTD
+
+PPTD 是一种基于 YAML 的演示文稿 DSL，是 OOXML 之上的简化抽象层：保留主题、页面布局、元素位置等核心信息，去除了 Master 等复杂嵌套，每页自包含、所见即所得。完整的格式定义见 [reference/pptd.md](skills/open-kimi-ppt/reference/pptd.md)。
+
+一个完整的 PPTD 项目目录结构如下：
+
+```text
+deck/
+  deck.pptd     # 清单文件
+  pages/        # 每页一个 .page 文件
+  media/        # 本地媒体资源（如有）
+  deck.pptx     # 默认同步生成的 PPTX 成品
+```
 
 ## 工作原理与安全边界
 
