@@ -84,6 +84,14 @@ For more stable quality, put a style in the prompt (e.g. “dark product-launch 
 Use open-kimi-ppt to create a liquid-glass-style deck about the history of Apple.
 ```
 
+**Example: Xiaomi YU7 (~8 pages, images as backgrounds)**
+
+```text
+Use open-kimi-ppt to create a Xiaomi YU7 intro PPT, with images as backgrounds from the web, about 8 pages.
+```
+
+[![WorkBuddy generating Xiaomi YU7 PPT](docs/images/example-workbuddy-yu7.png)](docs/images/example-workbuddy-yu7.png)
+
 **Example: iPhone 17 Pro (~8 pages)**
 
 ```text

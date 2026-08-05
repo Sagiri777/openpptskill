@@ -92,6 +92,8 @@ npx open-kimi-ppt-skills@latest install --force --target ~/.claude/skills
 | :---: | :---: |
 | [![小米 YU7 在线编辑](docs/images/example-yu7-editor.png)](docs/images/example-yu7-editor.png) | [![小米 YU7 导出 PPTX](docs/images/example-yu7-pptx.png)](docs/images/example-yu7-pptx.png) |
 
+[![WorkBuddy 生成小米 YU7 PPT](docs/images/example-workbuddy-yu7.png)](docs/images/example-workbuddy-yu7.png)
+
 **示例 2：DJI Pocket 4（图片作背景）**
 
 ```text
