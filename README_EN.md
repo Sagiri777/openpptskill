@@ -162,6 +162,10 @@ In short:
 
 *Above: an Apple Liquid Glass-style deck generated with DeepSeek-V4-Flash in WorkBuddy.*
 
+[![Reasonix + DeepSeek generating DJI Pocket 4 Pro PPT](docs/images/example-reasonix-deepseek.png)](docs/images/example-reasonix-deepseek.png)
+
+*Above: a DJI Pocket 4 Pro deck generated with DeepSeek-V4-Flash in Reasonix.*
+
 ### Style and themes
 
 This skill **does not ship a fixed theme or template**. You choose the look.

@@ -174,6 +174,10 @@ npx open-kimi-ppt-skills serve --port 56000
 
 *上图：在 WorkBuddy 中使用 DeepSeek-V4-Flash 生成 Apple Liquid Glass 风格 PPT 的实际效果。*
 
+[![Reasonix + DeepSeek 生成 DJI Pocket 4 Pro PPT](docs/images/example-reasonix-deepseek.png)](docs/images/example-reasonix-deepseek.png)
+
+*上图：在 Reasonix 中使用 DeepSeek-V4-Flash 生成 DJI Pocket 4 Pro PPT。*
+
 ### 关于风格与主题
 
 本 Skill **不预设固定主题或模板**。风格由你决定。
