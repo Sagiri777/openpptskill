@@ -4,7 +4,7 @@
 
 This project follows [Semantic Versioning](https://semver.org/).
 
-## [1.1.0] - 2026-08-06
+## [1.1.1] - 2026-08-06
 
 ### Added
 
