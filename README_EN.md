@@ -58,16 +58,16 @@ npx open-kimi-ppt-skills install --target ~/.workbuddy/skills
 
 ### Update
 
-When the skill is updated, overwrite the local install with `--force` (do not keep re-running install without `--force`):
+When the skill is updated, run install again — it overwrites the local installation:
 
 ```bash
-npx open-kimi-ppt-skills@latest install --force
+npx open-kimi-ppt-skills@latest install
 ```
 
 If you originally installed with `--target`, pass the same path again:
 
 ```bash
-npx open-kimi-ppt-skills@latest install --force --target ~/.claude/skills
+npx open-kimi-ppt-skills@latest install --target ~/.claude/skills
 ```
 
 You can also ask your agent: `Update the open-kimi-ppt skill for me.` Updating only replaces the skill files; it does not touch PPTD / PPTX projects you already generated.

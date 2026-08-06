@@ -4,6 +4,12 @@
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.0.2] - 2026-08-06
+
+### Changed
+
+- `install` overwrites an existing skill by default; `--force` is no longer required (still accepted for compatibility)
+
 ## [1.0.1] - 2026-08-06
 
 ### Added

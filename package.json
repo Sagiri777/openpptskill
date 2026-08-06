@@ -1,6 +1,6 @@
 {
   "name": "open-kimi-ppt-skills",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Unofficial reverse-engineered Kimi Slides skill for AI coding agents with local PPTD editing and PPTX export.",
   "license": "MIT",
   "author": "binaryify",

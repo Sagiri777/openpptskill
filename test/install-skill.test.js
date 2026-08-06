@@ -43,21 +43,7 @@ test("installs into ~/.agents/skills when no target is provided", () => {
   }
 });
 
-test("refuses to overwrite an existing installation without --force", () => {
-  const root = mkdtempSync(join(tmpdir(), "open-kimi-ppt-test-"));
-  const target = join(root, "skills");
-
-  try {
-    assert.equal(runCli(["--target", target]).status, 0);
-    const secondInstall = runCli(["--target", target]);
-    assert.equal(secondInstall.status, 1);
-    assert.match(secondInstall.stderr, /already exists/);
-  } finally {
-    rmSync(root, { recursive: true, force: true });
-  }
-});
-
-test("replaces an existing installation with --force", () => {
+test("overwrites an existing installation by default", () => {
   const root = mkdtempSync(join(tmpdir(), "open-kimi-ppt-test-"));
   const target = join(root, "skills");
   const skillFile = join(target, "open-kimi-ppt", "SKILL.md");
@@ -66,9 +52,24 @@ test("replaces an existing installation with --force", () => {
     assert.equal(runCli(["--target", target]).status, 0);
     writeFileSync(skillFile, "modified", "utf8");
 
+    const result = runCli(["--target", target]);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /Updated open-kimi-ppt/);
+    assert.match(readFileSync(skillFile, "utf8"), /^---\nname: open-kimi-ppt/m);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("accepts legacy --force without changing overwrite behavior", () => {
+  const root = mkdtempSync(join(tmpdir(), "open-kimi-ppt-test-"));
+  const target = join(root, "skills");
+
+  try {
+    assert.equal(runCli(["--target", target]).status, 0);
     const result = runCli(["--target", target, "--force"]);
     assert.equal(result.status, 0, result.stderr);
-    assert.match(readFileSync(skillFile, "utf8"), /^---\nname: open-kimi-ppt/m);
+    assert.match(result.stdout, /Updated open-kimi-ppt/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

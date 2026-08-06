@@ -44,8 +44,8 @@ Usage:
 
 Install options:
   --target <directory>  Skills directory (default: ~/.agents/skills)
-  --force               Replace an existing installation
 
+Re-running install replaces an existing open-kimi-ppt installation.
 Run "open-kimi-ppt-skills serve --help" for server options.
 `);
 }
@@ -55,13 +55,13 @@ function parseArguments(arguments_) {
   const command = args[0] === "install" || args[0] === "serve" ? args.shift() : "install";
   const options = command === "serve"
     ? { command, open: false, port: 55173 }
-    : { command, force: false, target: undefined };
+    : { command, target: undefined };
 
   while (args.length > 0) {
     const argument = args.shift();
 
+    // Accepted for backward compatibility; install always overwrites.
     if (command === "install" && argument === "--force") {
-      options.force = true;
       continue;
     }
 
@@ -111,19 +111,14 @@ function defaultSkillsDirectory() {
   return join(homedir(), ".agents", "skills");
 }
 
-function installSkill({ force, target }) {
+function installSkill({ target }) {
   if (!existsSync(join(sourceDirectory, "SKILL.md"))) {
     throw new Error(`packaged skill is incomplete: ${sourceDirectory}`);
   }
 
   const skillsDirectory = target ?? defaultSkillsDirectory();
   const destination = join(skillsDirectory, SKILL_NAME);
-
-  if (existsSync(destination) && !force) {
-    throw new Error(
-      `${destination} already exists; rerun with --force to replace it`,
-    );
-  }
+  const replaced = existsSync(destination);
 
   mkdirSync(skillsDirectory, { recursive: true });
   const stagingRoot = mkdtempSync(join(skillsDirectory, `.${SKILL_NAME}-`));
@@ -135,16 +130,17 @@ function installSkill({ force, target }) {
       filter: (source) => ![".DS_Store", "_user_meta.json"].includes(basename(source)),
     });
 
-    if (force) {
-      rmSync(destination, { recursive: true, force: true });
-    }
-
+    rmSync(destination, { recursive: true, force: true });
     renameSync(stagedSkill, destination);
   } finally {
     rmSync(stagingRoot, { recursive: true, force: true });
   }
 
-  console.log(`Installed ${SKILL_NAME} to ${destination}`);
+  console.log(
+    replaced
+      ? `Updated ${SKILL_NAME} at ${destination}`
+      : `Installed ${SKILL_NAME} to ${destination}`,
+  );
 }
 
 async function main() {

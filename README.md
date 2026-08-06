@@ -58,16 +58,16 @@ npx open-kimi-ppt-skills install --target ~/.workbuddy/skills
 
 ### 更新
 
-Skill 有更新时，用 `--force` 覆盖本地已安装版本即可（不要重复执行无 `--force` 的 install）：
+Skill 有更新时，再执行一次安装即可（会直接覆盖本地已安装版本）：
 
 ```bash
-npx open-kimi-ppt-skills@latest install --force
+npx open-kimi-ppt-skills@latest install
 ```
 
 若当初用过 `--target`，更新时带上相同路径：
 
 ```bash
-npx open-kimi-ppt-skills@latest install --force --target ~/.claude/skills
+npx open-kimi-ppt-skills@latest install --target ~/.claude/skills
 ```
 
 也可以对 AI 说：`帮我更新 open-kimi-ppt skill`。更新只替换 Skill 文件，不会影响已生成的 PPTD / PPTX 项目。
