@@ -28,14 +28,6 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 
-try:
-    import yaml
-except ImportError as exc:  # pragma: no cover - environment diagnostic
-    raise SystemExit(
-        "PyYAML is required. Install it with: python3 -m pip install --user pyyaml"
-    ) from exc
-
-
 SKILL_DIR = Path(__file__).resolve().parent.parent
 HOST_TEMPLATE = Path(__file__).with_name("export_host.html")
 IMAGE_MIME = {
@@ -54,6 +46,8 @@ FADE_TRANSITION_XML = (
     '<p:transition spd="fast" advClick="1"><p:fade/></p:transition>'
 )
 MIN_AGENT_BROWSER_VERSION = (0, 33, 2)
+MIN_NODE_MAJOR = 18
+NODE_INSTALL_HINT = "Install Node.js 18+ from https://nodejs.org, then retry."
 
 
 class ExportError(RuntimeError):
@@ -69,10 +63,42 @@ def log(message: str) -> None:
     print(f"[open-kimi-ppt] {message}", file=sys.stderr, flush=True)
 
 
+def ensure_pyyaml() -> Any:
+    try:
+        import yaml
+    except ImportError:
+        log("PyYAML is required; installing pyyaml with pip --user")
+        process = subprocess.run(
+            [sys.executable, "-m", "pip", "install", "--user", "pyyaml"],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            timeout=300,
+        )
+        if process.returncode != 0:
+            raise ExportError(
+                "failed to install PyYAML with pip --user:\n"
+                f"{process.stdout[-2000:]}\n"
+                "Install it manually with: python3 -m pip install --user pyyaml"
+            )
+        import yaml
+    return yaml
+
+
+yaml = ensure_pyyaml()
+
+
 def parse_version(output: str) -> Tuple[int, int, int]:
     match = re.search(r"(\d+)\.(\d+)\.(\d+)\b", output)
     if not match:
         raise ExportError(f"could not parse agent-browser version from: {output.strip()}")
+    return tuple(int(part) for part in match.groups())
+
+
+def parse_node_version(output: str) -> Tuple[int, int, int]:
+    match = re.search(r"v?(\d+)\.(\d+)\.(\d+)\b", output)
+    if not match:
+        raise ExportError(f"could not parse Node.js version from: {output.strip()}")
     return tuple(int(part) for part in match.groups())
 
 
@@ -89,7 +115,42 @@ def read_agent_browser_version(executable: str) -> Tuple[int, int, int]:
     return parse_version(process.stdout)
 
 
+def ensure_nodejs() -> str:
+    executable = shutil.which("node")
+    if not executable:
+        raise ExportError(f"Node.js is not installed or not on PATH. {NODE_INSTALL_HINT}")
+
+    process = subprocess.run(
+        [executable, "--version"],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        timeout=30,
+    )
+    if process.returncode != 0:
+        raise ExportError(f"node --version failed:\n{process.stdout[-2000:]}")
+
+    version = parse_node_version(process.stdout)
+    if version[0] < MIN_NODE_MAJOR:
+        raise ExportError(
+            f"Node.js {MIN_NODE_MAJOR}+ is required; found "
+            f"{'.'.join(map(str, version))} ({process.stdout.strip()}). {NODE_INSTALL_HINT}"
+        )
+
+    npm = shutil.which("npm")
+    if not npm:
+        raise ExportError(
+            "npm is not installed or not on PATH. "
+            f"npm ships with Node.js. {NODE_INSTALL_HINT}"
+        )
+
+    log(f"Node.js version: {'.'.join(map(str, version))}")
+    return executable
+
+
 def ensure_agent_browser() -> str:
+    ensure_nodejs()
+
     executable = shutil.which("agent-browser")
     version = read_agent_browser_version(executable) if executable else None
     if version is not None and version >= MIN_AGENT_BROWSER_VERSION:
@@ -100,7 +161,8 @@ def ensure_agent_browser() -> str:
     if not npm:
         reason = "not installed" if version is None else ".".join(map(str, version))
         raise ExportError(
-            f"agent-browser {reason}; npm is required to install agent-browser@latest"
+            f"agent-browser {reason}; npm is required to install agent-browser@latest. "
+            f"npm ships with Node.js. {NODE_INSTALL_HINT}"
         )
 
     current = "not installed" if version is None else ".".join(map(str, version))

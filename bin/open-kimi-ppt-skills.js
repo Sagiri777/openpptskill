@@ -8,8 +8,18 @@ import { fileURLToPath } from "node:url";
 import { startEditorServer } from "../lib/editor-server.js";
 
 const SKILL_NAME = "open-kimi-ppt";
+const MIN_NODE_MAJOR = 18;
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDirectory = join(packageRoot, "skills", SKILL_NAME);
+
+function assertNodeVersion() {
+  const major = Number.parseInt(process.versions.node.split(".")[0], 10);
+  if (!Number.isInteger(major) || major < MIN_NODE_MAJOR) {
+    throw new Error(
+      `Node.js ${MIN_NODE_MAJOR}+ is required; found ${process.version}. Install from https://nodejs.org`,
+    );
+  }
+}
 
 function printHelp(command) {
   if (command === "serve") {
@@ -138,6 +148,7 @@ function installSkill({ force, target }) {
 }
 
 async function main() {
+  assertNodeVersion();
   const options = parseArguments(process.argv.slice(2));
   if (options.help) {
     printHelp(options.command);

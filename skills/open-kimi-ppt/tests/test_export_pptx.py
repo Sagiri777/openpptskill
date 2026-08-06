@@ -22,16 +22,51 @@ class ExportPptxTests(unittest.TestCase):
     @patch.object(MODULE.subprocess, "run")
     @patch.object(MODULE.shutil, "which")
     def test_old_agent_browser_is_upgraded(self, which, run):
-        which.side_effect = ["/bin/agent-browser", "/bin/npm", "/bin/agent-browser"]
+        which.side_effect = [
+            "/bin/node",
+            "/bin/npm",
+            "/bin/agent-browser",
+            "/bin/npm",
+            "/bin/agent-browser",
+        ]
         run.side_effect = [
+            MODULE.subprocess.CompletedProcess([], 0, "v22.11.0\n"),
             MODULE.subprocess.CompletedProcess([], 0, "agent-browser 0.17.1\n"),
             MODULE.subprocess.CompletedProcess([], 0, "changed 1 package\n"),
             MODULE.subprocess.CompletedProcess([], 0, "agent-browser 0.33.2\n"),
         ]
         self.assertEqual(MODULE.ensure_agent_browser(), "/bin/agent-browser")
-        self.assertEqual(run.call_args_list[1].args[0], [
+        self.assertEqual(run.call_args_list[2].args[0], [
             "/bin/npm", "install", "-g", "agent-browser@latest"
         ])
+
+    @patch.object(MODULE.subprocess, "run")
+    @patch.object(MODULE.shutil, "which")
+    def test_missing_nodejs_raises_clear_error(self, which, run):
+        which.return_value = None
+        with self.assertRaisesRegex(MODULE.ExportError, "Node.js is not installed"):
+            MODULE.ensure_nodejs()
+        run.assert_not_called()
+
+    @patch.object(MODULE.subprocess, "run")
+    @patch.object(MODULE.shutil, "which")
+    def test_old_nodejs_raises_clear_error(self, which, run):
+        which.return_value = "/bin/node"
+        run.return_value = MODULE.subprocess.CompletedProcess([], 0, "v16.20.2\n")
+        with self.assertRaisesRegex(MODULE.ExportError, "Node.js 18\\+ is required"):
+            MODULE.ensure_nodejs()
+
+    @patch.object(MODULE.subprocess, "run")
+    @patch.object(MODULE.shutil, "which")
+    def test_missing_npm_raises_clear_error(self, which, run):
+        which.side_effect = ["/bin/node", None]
+        run.return_value = MODULE.subprocess.CompletedProcess([], 0, "v22.11.0\n")
+        with self.assertRaisesRegex(MODULE.ExportError, "npm is not installed"):
+            MODULE.ensure_nodejs()
+
+    def test_parse_node_version(self):
+        self.assertEqual(MODULE.parse_node_version("v22.11.0"), (22, 11, 0))
+        self.assertEqual(MODULE.parse_node_version("18.20.4"), (18, 20, 4))
 
     def test_fade_is_inserted_before_timing(self):
         source = (

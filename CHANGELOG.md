@@ -1,0 +1,30 @@
+# 更新日志
+
+[简体中文](CHANGELOG.md) | [English](CHANGELOG_EN.md)
+
+本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
+
+## [1.0.1] - 2026-08-06
+
+### 新增
+
+- Skill 工作流增加 **step0 本地前置检测**：生成前检查 Node.js 18+、npm/npx、python3，并提示需要 Chromium 系浏览器
+- 导出脚本在启动时检测 **Node.js 18+** 与 **npm**；缺失或版本过低时给出明确安装指引
+- CLI（`open-kimi-ppt-skills`）启动时校验 Node.js 主版本 ≥ 18
+- 缺失 **PyYAML** 时自动 `pip install --user pyyaml`（与 Pillow / websocket-client 行为一致）
+
+### 文档
+
+- 补充多 Agent / 多模型实测截图（ChatGPT·Codex + 5.6 Luna、Reasonix + DeepSeek、WorkBuddy 等）
+- 安装说明改为「自动 / 手动二选一」，并补充 Windows 路径说明
+- README 结构与示例图更新
+
+## [1.0.0] - 2026-08-05
+
+### 新增
+
+- 首次发布 `open-kimi-ppt-skills`
+- PPTD 生成 / 编辑 / 复刻，默认同时交付可编辑 PPTD 项目与 PPTX 成品
+- 浏览器侧导出 PPTX（嵌字体、淡入淡出切换），导出前可选多模态视觉质检
+- 本地在线 PPTD 编辑器（`npx open-kimi-ppt-skills serve`）
+- CLI 安装 Skill 到 `~/.agents/skills`（可用 `--target` 指定其他 Agent 目录）

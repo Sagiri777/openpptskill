@@ -18,6 +18,15 @@ The .pptd format is a simplified abstraction layer over OOXML that follows basic
 
 ## PPT production workflow
 
+### step0. Check local prerequisites
+Default delivery includes PPTX export (and optional `npx open-kimi-ppt-skills serve`), which need a local toolchain. **Before generating**, verify:
+
+1. **Node.js 18+**: run `node --version`. If `node` is missing or the major version is below 18, **stop immediately**, tell the user to install Node.js 18+ from https://nodejs.org (or their OS package manager), and do not continue with PPTX export / `npx` until it is available. Only continue with PPTD-only output when the user explicitly opts out of PPTX.
+2. **npm / npx**: run `npm --version`. They ship with Node.js; if missing, treat Node.js as not installed correctly and guide the user to reinstall/fix PATH.
+3. **python3**: run `python3 --version` (on Windows, `python` may be the correct command). Needed for `export_pptx.py` / `export_images.py`.
+4. **Chrome / Chromium / Edge**: needed by `agent-browser` for PPTX export and visual QA. If export later fails with a browser-launch error, ask the user to install a Chromium-based browser.
+5. Soft deps are auto-handled by the scripts when missing: **PyYAML**, **agent-browser** (≥0.33.2 via npm), and for image QA **Pillow** + **websocket-client**. Network access to `www.kimi.com` and `statics.moonshot.cn` is still required at export time.
+
 ### step1. Read the context thoroughly
 Read **all files uploaded by the user**, the provided URLs, and the pptd format guide `reference/pptd.md` to fully understand the user's requirements.
 
@@ -144,8 +153,8 @@ When generating a PPT, adopt different production approaches for different user 
    A project directory may be passed instead of the manifest only when it contains exactly one `.pptd` file.
    Existing output files are not overwritten unless `--force` is passed.
 7. Local export requirements and boundaries:
-   - requires `python3`, PyYAML, `npm`, `agent-browser`, Chrome/Chromium, and network access to `www.kimi.com` plus `statics.moonshot.cn`; the image-based visual QA step additionally requires Pillow, auto-installed with `pip --user` when missing;
-   - before browser export, `export_pptx.py` checks `agent-browser --version`; when it is missing or below `0.33.2`, it installs `agent-browser@latest` globally with npm, then verifies the resulting version before continuing;
+   - requires **Node.js 18+** (`node` / `npm` / `npx`), `python3`, a Chromium-based browser, and network access to `www.kimi.com` plus `statics.moonshot.cn`;
+   - before browser export, `export_pptx.py` checks Node.js 18+ and `npm`, then checks `agent-browser --version`; when `agent-browser` is missing or below `0.33.2`, it installs `agent-browser@latest` globally with npm; **PyYAML** is auto-installed with `pip --user` when missing; the image-based visual QA step additionally auto-installs Pillow and websocket-client the same way;
    - the PPTD document itself is provided to the public editor iframe through the localhost SDK bridge, not uploaded to a server-side PPTX conversion endpoint;
    - remote images, icons, or fonts referenced by the deck may still be fetched from their respective hosts;
    - local PNG/JPEG/GIF/SVG files inside the PPTD project are supplied to the iframe as data URLs;
