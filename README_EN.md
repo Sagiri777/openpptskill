@@ -166,6 +166,10 @@ In short:
 
 *Above: a DJI Pocket 4 Pro deck generated with DeepSeek-V4-Flash in Reasonix.*
 
+[![ChatGPT / Codex with 5.6 Luna generating an iPhone 17 Pro PPT](docs/images/example-codex-iphone17pro.png)](docs/images/example-codex-iphone17pro.png)
+
+*Above: an iPhone 17 Pro deck generated with the 5.6 Luna model in ChatGPT / Codex — fast and strong.*
+
 ### Style and themes
 
 This skill **does not ship a fixed theme or template**. You choose the look.

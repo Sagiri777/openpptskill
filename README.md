@@ -178,6 +178,10 @@ npx open-kimi-ppt-skills serve --port 56000
 
 *上图：在 Reasonix 中使用 DeepSeek-V4-Flash 生成 DJI Pocket 4 Pro PPT。*
 
+[![ChatGPT / Codex 使用 5.6 Luna 生成 iPhone 17 Pro PPT](docs/images/example-codex-iphone17pro.png)](docs/images/example-codex-iphone17pro.png)
+
+*上图：在 ChatGPT / Codex 中使用 5.6 Luna 模型生成 iPhone 17 Pro PPT，又快又好。*
+
 ### 关于风格与主题
 
 本 Skill **不预设固定主题或模板**。风格由你决定。
