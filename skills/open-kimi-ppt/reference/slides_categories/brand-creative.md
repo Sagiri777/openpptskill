@@ -18,6 +18,7 @@ Use strong font-size contrast and extreme asymmetric layouts to build an exagger
 1. **Make extreme choices**: oversized type, giant images, intense whitespace, high-density multi-columns, a single vivid color, or heavy lines. Build an ultimate style: old-newspaper front page, Memphis, Constructivism, Swiss style...
 2. **Vary the pages**: cover, opinion, data, and image pages each have different compositions. There is no need to strictly follow one identical "page skeleton," but the deck's consistency should still be recognizable through palette, typeface, font sizes, same-style decorative elements, and the same grid alignment.
 3. **Have a visual rationale**: the visual language must come from the deck's subject, brand, industry, era, or material, and must help the audience understand the content.
+4. **Animation strengthens impact**: live launches, brand proposals, events, or portfolio presentations may use animation to strengthen rhythm, emotion, and brand narrative, but motion direction, speed, and amplitude must follow a unified visual motif, with only one main dynamic idea per page.
 
 ## Prohibitions
 1. **No cards by default**: unless the user explicitly requests it, strictly forbid using rounded rectangles or rectangular cards to build hierarchy or alignment: line segments, whitespace, and font/size differences are better solutions.
@@ -83,10 +84,10 @@ Visual references are only "references": they show you something good so you kno
 - No transparent gradients; colors appear only as flats, overprints, and halftones.
 
 **Type**:
-- Cover title: ultra-heavy condensed poster type, 88–120 pt, allowed to rotate -3 degrees and cross the canvas edge.
+- Cover title: ultra-heavy condensed poster type, 88–120 pt (for Latin, bring in ultra-heavy display faces like Anton via customFonts — see fonts.md), allowed to rotate -3 degrees and cross the canvas edge.
 - Page titles: 42–58 pt, may be reversed white on a black ground.
 - Body text: 14–17 pt, in a clear sans-serif or serif face.
-- Annotations: 10–12 pt monospaced, mimicking typewriter labels.
+- Annotations: 10–12 pt monospaced (bring in JetBrains Mono etc. via customFonts — see fonts.md), mimicking typewriter labels.
 
 **Grid and geometry**:
 - Use unequal-width two and three columns and cut-and-paste modules.
@@ -126,10 +127,10 @@ Visual references are only "references": they show you something good so you kno
 - No blue-purple gradients and no colored status blocks.
 
 **Type**:
-- Masthead: ultra-heavy sans-serif, 72–100 pt, all caps where supported or otherwise set as ultra-bold short text.
+- Masthead: ultra-heavy sans-serif, 72–100 pt (for Latin, bring in Archivo Black etc. via customFonts — see fonts.md), all caps where supported or otherwise set as ultra-bold short text.
 - Headlines: 44–72 pt, tight leading.
 - Body text: 11–14 pt serif, line spacing 1.25–1.4.
-- Data and labels: monospaced, 10–14 pt.
+- Data and labels: monospaced (bring in JetBrains Mono etc. via customFonts — see fonts.md), 10–14 pt.
 - Pull quotes: 28–40 pt serif italic or bold.
 
 **Grid and geometry**:

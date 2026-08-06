@@ -4,6 +4,22 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.1.0] - 2026-08-06
+
+### 新增
+
+- PPTD 对齐官方元素级 `animations` 规范；Skill 补充动画 / `notes` 使用边界
+- 对齐配图优先级、文风禁令、澄清提问、复刻细则、并行写页等官方策略
+- 内置约 30 套 preset design system，并支持点名使用
+- 恢复 `customFonts`（Google Fonts）与海报推荐尺寸
+- 根目录主题目录：`theme.md` / `theme_EN.md`（含预览图）
+- 示例项目 `example/xiaomi-yu7-ppt-animation`（页内元素入场动画）
+
+### 变更
+
+- 场景文档同步官方动画细则与 `customFonts` 引用
+- README 补充元素动画、预设主题说明与示例 Prompt
+
 ## [1.0.2] - 2026-08-06
 
 ### 变更

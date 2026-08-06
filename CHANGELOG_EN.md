@@ -4,6 +4,22 @@
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-08-06
+
+### Added
+
+- Align PPTD with official element-level `animations`; Skill notes for animation / `notes` usage bounds
+- Align image priority, anti-AI copy rules, clarification asks, replicate guidance, and parallel page writes
+- Ship ~30 preset design systems, invoked only when named
+- Restore `customFonts` (Google Fonts) and poster size recommendations
+- Root theme catalogs: `theme.md` / `theme_EN.md` (with preview images)
+- Sample project `example/xiaomi-yu7-ppt-animation` (on-slide entrance animations)
+
+### Changed
+
+- Sync scenario docs with official animation guidance and `customFonts` references
+- README: document element animations, preset themes, and sample prompts
+
 ## [1.0.2] - 2026-08-06
 
 ### Changed

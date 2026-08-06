@@ -5,6 +5,7 @@
 - The storyline of the whole deck is clear and builds step by step.
 - If a page has a core claim, that most important sentence enjoys the visual privilege of being "marked."
 - **Emotion has a curve**: the deck's emotion is not flat — from unease (the pain point) to hope (the solution) to belief (the evidence) to urge (the action).
+- For a live pitch, click-triggered animations may progressively present “pain point → solution → evidence → action,” the business model, milestones, or the ask; each click should advance only one claim or evidence step.
 - Make good use of data support: assist the proposal with data, tables, and charts at the right positions. Data must be truthful and reliable, with sources stated.
 
 ## Tell a more complete story through SmartArt structural diagrams

@@ -31,6 +31,7 @@ Academic presentations in different research fields have different emphases: thi
 - Empirical analysis: essentially also experimental research, but social-science work should be more narrative-driven than science-and-engineering work.
 - Humanities/architecture/arts: archives, maps, manuscripts, image details, chronological threads, and textual evidence... Beyond academic rigor, there should also be brand-level refinement — go read `brand-creative.md` again.
 - Use shapes, lines, and arrows as annotations to emphasize or explain chart and image content.
+- When needed, click-triggered animations may progressively present formula derivations, experimental workflows, mechanism explanations, and image annotations.
 
 ## Prohibitions
 
@@ -84,7 +85,7 @@ Academic presentations in different research fields have different emphases: thi
 - Body pages may set an extremely thin header or footer rule, with a short title, section name, and page number fixed in place — or a section navigation.
 
 **Research content**:
-- Formulas keep their numbering, conditions, and symbol explanations; key derivations may appear step by step, but each page must form a complete local argument.
+- Formulas keep their numbering, conditions, and symbol explanations; each page must form a complete local argument.
 - Tables preferably adopt the three-line table structure from papers, highlighting only the rows and columns directly relevant to the conclusion.
 
 **Page grammar**:

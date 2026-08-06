@@ -5,7 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/open-kimi-ppt-skills)](https://www.npmjs.com/package/open-kimi-ppt-skills)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 
-An unofficial presentation skill for AI coding agents, reverse-engineered from Kimi Slides. It lets your agent create, edit, replicate, read, and export PPT/PPTX files. **Every run delivers two outputs by default: an editable PPTD project and a ready-to-use PPTX** — fonts embedded and fade transitions included — plus a local in-browser PPTD editor with manual PPTX export. Works with Codex, Claude Code, Cursor, WorkBuddy, and any agent that supports the SKILL.md format.
+An unofficial presentation skill for AI coding agents, reverse-engineered from Kimi Slides. It lets your agent create, edit, replicate, read, and export PPT/PPTX files. **Every run delivers two outputs by default: an editable PPTD project and a ready-to-use PPTX** — fonts embedded and fade page transitions included — with optional on-slide element animations and [preset themes](theme_EN.md), plus a local in-browser PPTD editor with manual PPTX export. Works with Codex, Claude Code, Cursor, WorkBuddy, and any agent that supports the SKILL.md format.
 
 > [!IMPORTANT]
 > This project is implemented by reverse-engineering the Kimi Slides skill, the PPTD format, and the frontend behavior and communication protocol of the publicly accessible web editor. It is not an official Kimi or Moonshot AI project and is not endorsed or supported by them. Public frontend resources and compatibility contracts used by this project may change without notice. Provided for learning and research purposes only.
@@ -100,6 +100,15 @@ Use open-kimi-ppt to create an iPhone 17 Pro intro PPT.
 
 [![iPhone 17 Pro](docs/images/example-iphone-17pro.png)](docs/images/example-iphone-17pro.png)
 
+**Example: on-slide element animations (live presentation)**
+
+```text
+Use open-kimi-ppt to create a Xiaomi YU7 intro PPT, with images as backgrounds from the web, about 8 pages.
+Require element entrance animations.
+```
+
+See the sample deck at [example/xiaomi-yu7-ppt-animation](example/xiaomi-yu7-ppt-animation) (PPTD project + PPTX; open with `npx open-kimi-ppt-skills serve` to preview animations).
+
 ### Edit online and export manually
 
 Prefer asking your agent to start the local editor, for example:
@@ -129,7 +138,9 @@ Writable folder access requires a Chromium-based browser with the File System Ac
 ## Features
 
 - **PPTD generation**: let your agent generate complete, editable PPTD projects — from scratch, with style transfer, template reuse, or replication from images/PDFs.
-- **PPTX generation**: produce a matching PPTX by default, with fonts embedded and fade transitions written automatically.
+- **Preset themes**: ~30 official-style design systems you can name to apply; full list with previews in [theme_EN.md](theme_EN.md).
+- **Element animations**: Off by default. Add `Require element entrance animations` to the prompt; the agent picks suitable on-slide effects per page.
+- **PPTX generation**: produce a matching PPTX by default, with fonts embedded and fade **page** transitions written automatically (separate from on-slide element animations).
 - **Visual QA**: with a multimodal model, the skill exports every page as an image, stitches them into an overview sheet, and checks each page (distortion, occlusion, out-of-bounds elements, contrast, layout consistency, text overflow) before PPTX export — fixing and re-checking until every page passes.
 - **Online editing**: view and edit local PPTD projects in a browser, with autosave and configurable slide transitions.
 - **Manual export**: export PPTX manually from the editor at any time.
@@ -152,11 +163,12 @@ Most PPT skills fall into three buckets: assemble OOXML / pptxgenjs in code, ren
 In short:
 
 1. **DSL built for agents** — PPTD describes theme, layout, and elements in YAML, more stable than raw OOXML / pptxgenjs, and more locally editable than full-slide images.
-2. **Two deliverables by default** — an iterable PPTD project plus a ready-to-open PPTX (embedded fonts, fade transitions).
-3. **Truly editable PPTX** — text boxes and shapes remain editable in PowerPoint / WPS, unlike image-only decks.
-4. **Local visual editor** — preview, tweak, set transitions, and re-export in the browser without rerunning the whole agent flow.
-5. **Visual QA before export** — full-page screenshots plus an overview sheet catch occlusion, overflow, contrast, and layout issues before PPTX is written.
-6. **Not locked to the official model — lower cost** — unlike official Kimi Slides, you can run this in any compatible agent with cheaper models such as DeepSeek. Even without multimodal vision, a model that follows the PPTD spec can still produce strong decks (multimodal helps more with the visual QA pass).
+2. **Two deliverables by default** — an iterable PPTD project plus a ready-to-open PPTX (embedded fonts, fade page transitions).
+3. **Element animations** — add `Require element entrance animations` to the prompt; the agent chooses effects and timing for you.
+4. **Truly editable PPTX** — text boxes and shapes remain editable in PowerPoint / WPS, unlike image-only decks.
+5. **Local visual editor** — preview, tweak, set transitions, and re-export in the browser without rerunning the whole agent flow.
+6. **Visual QA before export** — full-page screenshots plus an overview sheet catch occlusion, overflow, contrast, and layout issues before PPTX is written.
+7. **Not locked to the official model — lower cost** — unlike official Kimi Slides, you can run this in any compatible agent with cheaper models such as DeepSeek. Even without multimodal vision, a model that follows the PPTD spec can still produce strong decks (multimodal helps more with the visual QA pass).
 
 [![DeepSeek generating a Liquid Glass-style PPT](docs/images/example-deepseek-liquid-glass.png)](docs/images/example-deepseek-liquid-glass.png)
 
@@ -172,17 +184,20 @@ In short:
 
 ### Style and themes
 
-This skill **does not ship a fixed theme or template**. You choose the look.
+By default the agent **does not** auto-apply a fixed theme: without a style cue it follows the scenario guides. The skill also ships ~30 official-style presets, used **only when you name one** (e.g. “use pine-green-strategy”).
+
+Browse theme IDs, descriptions, and preview images in **[theme_EN.md](theme_EN.md)**.
 
 > [!TIP]
-> **Best results come from stating a PPT style in the prompt, or attaching a reference PPT / PPTX template.** With a style constraint or template to follow, output quality is clearly better and more stable. Topic-only prompts leave the agent free to invent a look, so results vary more.
+> **Best results come from stating a PPT style in the prompt, naming a preset, or attaching a reference PPT / PPTX template.** With a style constraint or template to follow, output quality is clearly better and more stable. Topic-only prompts leave the agent free to invent a look, so results vary more.
 
 Common approaches:
 
 1. **Describe the style in the prompt** — e.g. dark tech, magazine layout, Apple liquid glass, minimal big-type poster slides;
-2. **Provide a reference template** — upload an existing PPT / PPTX / screenshot and ask the agent to transfer colors, layout, and overall style.
+2. **Name a preset theme** — e.g. “use `pine-green-strategy`”; see the catalog in [theme_EN.md](theme_EN.md);
+3. **Provide a reference template** — upload an existing PPT / PPTX / screenshot and ask the agent to transfer colors, layout, and overall style.
 
-You can combine both: lock the look with a template, then add one line about the style you want to emphasize.
+You can combine these: lock the look with a preset or template, then add one line about the style you want to emphasize.
 
 ## Screenshots
 

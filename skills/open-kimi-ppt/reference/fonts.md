@@ -45,3 +45,9 @@
 | 精品点阵体 | Pixel font | Jingpin Dianzhen; 9×9 dot-matrix pixel style with an extremely retro electronic feel | Games, tech, pixel art | Yes |
 | LXGW Bright | Serif (fangsong/kaiti) | LXGW WenKai family; combines fangsong and kaiti characteristics; gentle and clear letterforms | Literature, education, humanities | No |
 | ZCOOL KuaiLe | Handwriting (rounded) | ZCOOL KuaiLe; lively, cute, playful and cartoonish; youthful energy | Anime, children, entertainment | No |
+
+## Custom fonts (Google Fonts)
+
+Use custom fonts to strengthen expressiveness or to fill font categories the built-in list does not cover (e.g. JetBrains Mono for monospace, Archivo Black for ultra-heavy sans-serif, EB Garamond for classical serif), brought in from Google Fonts via `customFonts`: declare `customFonts` in the `.pptd` entry file (see CustomFont in [pptd.md](./pptd.md)); the `family` name must match Google Fonts exactly, and once declared it can be referenced in `fontFamily`.
+
+Note: custom fonts follow the same "exactly identical names" requirement

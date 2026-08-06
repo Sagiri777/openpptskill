@@ -6,6 +6,7 @@
 - Open the first page and know how the period went overall: besides the title, the cover presents the single most critical status line of the whole deck — fulfillment rate of core metrics, a red/green/yellow traffic-light overview, or the biggest gap.
 - Information is truthful and never fabricated: user-provided numbers and facts are neither exaggerated nor selectively clipped; any baseline that exists in the material travels alongside the results, and anything not in the material is not invented on the user's behalf; use numbers, charts, and tables flexibly to present key information.
 - Professional wording that fits the user's identity: no layman's language, and no one-size-fits-all generic business-speak.
+- For live reporting, click-triggered animations may progressively present “status → cause → action,” “issue → owner → deadline,” or before-and-after changes, but core metrics, current status, and items requiring confirmation must remain directly visible.
 
 ## Visualize information with structural diagrams
 

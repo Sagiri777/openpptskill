@@ -5,7 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/open-kimi-ppt-skills)](https://www.npmjs.com/package/open-kimi-ppt-skills)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 
-逆向 Kimi Slides 实现的非官方演示文稿 Skill：让 AI Coding Agent 能够创建、编辑、复刻、读取并导出 PPT/PPTX。**每次生成默认同时交付两份成果：可继续编辑的 PPTD 项目和开箱即用的 PPTX 成品**（自动嵌入字体、写入淡入淡出切换动画），并提供本地在线 PPTD 编辑器支持随时手动导出。支持 Codex、Claude Code、Cursor、WorkBuddy 等任何兼容 SKILL.md 规范的 Agent。
+逆向 Kimi Slides 实现的非官方演示文稿 Skill：让 AI Coding Agent 能够创建、编辑、复刻、读取并导出 PPT/PPTX。**每次生成默认同时交付两份成果：可继续编辑的 PPTD 项目和开箱即用的 PPTX 成品**（自动嵌入字体、写入淡入淡出翻页切换），支持页内元素动画与[预设主题](theme.md)，并提供本地在线 PPTD 编辑器随时手动导出。支持 Codex、Claude Code、Cursor、WorkBuddy 等任何兼容 SKILL.md 规范的 Agent。
 
 > [!IMPORTANT]
 > 本项目通过逆向分析 Kimi Slides Skill、PPTD 格式以及公开网页编辑器的前端行为与通信协议实现，并非 Kimi 或 Moonshot AI 的官方项目，也未获得其认可或支持。项目依赖的公开前端资源和兼容协议可能随 Kimi 更新而失效，仅供学习与研究使用。
@@ -112,6 +112,15 @@ npx open-kimi-ppt-skills@latest install --target ~/.claude/skills
 
 [![iPhone 17 Pro](docs/images/example-iphone-17pro.png)](docs/images/example-iphone-17pro.png)
 
+**示例 4：带页内元素动画（现场演示）**
+
+```text
+使用 open-kimi-ppt 做一个介绍小米 yu7的 PPT,要求图片做背景,素材从网上找,8 页左右
+要求带元素入场动画
+```
+
+成品示例见 [example/xiaomi-yu7-ppt-animation](example/xiaomi-yu7-ppt-animation)（含 PPTD 项目与 PPTX，可用 `npx open-kimi-ppt-skills serve` 打开预览动画）。
+
 ### 在线编辑与手动导出
 
 建议直接让 AI 启动本地编辑器，例如说：
@@ -141,7 +150,9 @@ npx open-kimi-ppt-skills serve --port 56000
 ## 功能特性
 
 - **PPTD 生成**：让 Agent 生成完整、可继续编辑的 PPTD 项目，支持从零创作、风格迁移、模板复用、图片/PDF 复刻。
-- **PPTX 生成**：默认同步生成 PPTX 成品，自动嵌入字体并写入淡入淡出切换动画。
+- **预设主题**：内置约 30 套官方同款 design system，点名即可套用；完整列表与预览图见 [theme.md](theme.md)。
+- **元素动画**：默认不加。提示词加上「要求带元素入场动画」即可，由 AI 按页编排合适的入场效果。
+- **PPTX 生成**：默认同步生成 PPTX 成品，自动嵌入字体并写入淡入淡出**翻页**切换（与页内元素动画是两回事）。
 - **视觉质检**：多模态模型在导出 PPTX 前自动导出整份页面图片、拼接总览图逐项核查（变形、遮挡、出界、对比度、排版、文字溢出），问题页面修复后复检，直至全部通过。
 - **在线编辑**：通过浏览器查看和编辑本地 PPTD 项目，自动保存，可配置页面切换动画。
 - **手动导出**：在编辑器中随时手动导出 PPTX。
@@ -164,11 +175,12 @@ npx open-kimi-ppt-skills serve --port 56000
 更具体地说，相对其他方案的优势是：
 
 1. **中间格式为 Agent 设计**：PPTD 用 YAML 描述主题、布局与元素，比直接写 OOXML / pptxgenjs 更稳，也比「整页渲一张图」更可局部修改。
-2. **默认同交两份成果**：可继续迭代的 PPTD 项目 + 开箱即用的 PPTX（嵌字体、淡入淡出切换），不是只给半成品。
-3. **PPTX 真能改**：导出后文本框、形状仍可在 PowerPoint / WPS 里编辑，不像图片型 PPT 只能当海报。
-4. **有本地可视化编辑器**：浏览器里预览、微调、配切换动画并手动再导出，不需要每次都让 Agent 重跑全流程。
-5. **导出前强制视觉质检**：整页截图 + 总览图检查遮挡、出界、对比度、溢出等问题，修完再出 PPTX。
-6. **不绑官方模型，成本更低**：相对官方 Kimi Slides，你可以在任意兼容 Agent 里使用 DeepSeek 等低成本模型；即便模型不支持多模态，只要按 PPTD 规范生成，也能做出不错的成品（有多模态时再做视觉质检会更稳）。
+2. **默认同交两份成果**：可继续迭代的 PPTD 项目 + 开箱即用的 PPTX（嵌字体、淡入淡出翻页），不是只给半成品。
+3. **支持元素动画**：提示词写「要求带元素入场动画」即可启用；具体效果与节奏由 AI 处理，无需用户点名动画类型。
+4. **PPTX 真能改**：导出后文本框、形状仍可在 PowerPoint / WPS 里编辑，不像图片型 PPT 只能当海报。
+5. **有本地可视化编辑器**：浏览器里预览、微调、配切换动画并手动再导出，不需要每次都让 Agent 重跑全流程。
+6. **导出前强制视觉质检**：整页截图 + 总览图检查遮挡、出界、对比度、溢出等问题，修完再出 PPTX。
+7. **不绑官方模型，成本更低**：相对官方 Kimi Slides，你可以在任意兼容 Agent 里使用 DeepSeek 等低成本模型；即便模型不支持多模态，只要按 PPTD 规范生成，也能做出不错的成品（有多模态时再做视觉质检会更稳）。
 
 [![DeepSeek 生成 Liquid Glass 风格 PPT](docs/images/example-deepseek-liquid-glass.png)](docs/images/example-deepseek-liquid-glass.png)
 
@@ -184,17 +196,20 @@ npx open-kimi-ppt-skills serve --port 56000
 
 ### 关于风格与主题
 
-本 Skill **不预设固定主题或模板**。风格由你决定。
+默认 **不会** 自动套用固定主题：未指定风格时由 Agent 按场景指南自行发挥。Skill 内另附约 30 套官方同款 preset，**仅在你点名时**才会使用（例如「用 pine-green-strategy」）。
+
+完整主题名、风格说明与预览图见 **[theme.md](theme.md)**。
 
 > [!TIP]
-> **强烈建议在 Prompt 里写明 PPT 风格，或直接附上参考 PPT / PPTX 模板。** 有风格约束或模板参照时，出品会明显更好、更稳定；只给主题不给风格时，Agent 会自行发挥，效果容易波动。
+> **强烈建议在 Prompt 里写明 PPT 风格、点名一套 preset，或直接附上参考 PPT / PPTX 模板。** 有风格约束或模板参照时，出品会明显更好、更稳定；只给主题不给风格时，Agent 会自行发挥，效果容易波动。
 
-常见两种用法：
+常见用法：
 
 1. **在 Prompt 里描述风格**：例如「深色科技风」「杂志排版」「苹果 liquid glass」「极简留白 + 大字报」等；
-2. **提供参考模板**：上传现有 PPT / PPTX / 截图，让 Agent 迁移配色、版式与风格。
+2. **点名预设主题**：例如「用 `pine-green-strategy`」——主题列表见 [theme.md](theme.md)；
+3. **提供参考模板**：上传现有 PPT / PPTX / 截图，让 Agent 迁移配色、版式与风格。
 
-两者可以一起用：先给模板定调，再用一句话补充本次要强化的风格。
+可组合使用：先点名 preset 或给模板定调，再用一句话补充本次要强化的风格。
 
 ## 界面预览
 

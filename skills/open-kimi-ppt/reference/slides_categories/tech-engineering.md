@@ -73,6 +73,7 @@ When no better structure fits, start from "decision summary → goals and constr
 - Alternate text-explanation pages and visual-evidence pages; avoid consecutive stacks of structurally identical bullet lists.
 - For complex concepts, give the whole first, then expand layer by layer along stable coordinates; do not redraw the same architecture on every page.
 - Show the normal path, exception paths, and migration path in layers; keep the unchanged parts and highlight only what changes.
+- In live explanations, animations may progressively show data flow, control flow, state changes, failure recovery, or migration processes along stable coordinates; each animation group should express only one causal or state change.
 - Accent pages prioritize key architectures, key comparisons, incident causality, or the final decision — do not manufacture climaxes with big-type slogans.
 - Section transitions appear only when a genuine change of rhythm is needed; short materials are not force-fitted with tables of contents and section covers.
 - End by returning to the decision, the validation results, or the next steps — never replace the conclusion with a lone "Thank you."
@@ -154,7 +155,7 @@ When no better structure fits, start from "decision summary → goals and constr
 - When the brand has existing visual assets, inherit them first; without brand constraints, build the palette along the lines of "background color, structural color, critical-path color, status colors, neutrals."
 - Each color carries a stable meaning throughout the deck; critical states are additionally distinguished by text, line style, or shape.
 - Titles and body text prefer highly legible sans-serif faces; when a document feel is needed, titles may use a restrained serif.
-- Code uses monospaced fonts; one deck usually uses no more than two body-type families.
+- Code uses monospaced fonts (the built-in list has no monospace; bring in JetBrains Mono etc. via customFonts — see fonts.md); one deck usually uses no more than two body-type families.
 - When content grows, first condense the text, split pages, or adjust the text-to-graphic ratio — only then shrink font size slightly.
 
 ### 8.3 Lines, icons, and effects

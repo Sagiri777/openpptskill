@@ -6,6 +6,7 @@
 2. Every page has enough depth: the core conclusion can be grasped quickly, while reading the full page takes 5 minutes.
 3. Support cascades from conclusion to evidence: once the title states a judgment, the page should carry several self-standing supporting judgments that connect the conclusion to the evidence, each with one verifiable sentence of support.
 4. Body-page titles are preferably declarative sentences ("Europe's electric heavy-truck batteries reach 48 GWh by 2030 — 16x growth in six years under a strong policy push"), but decide whether to use a declarative sentence based on the actual content.
+5. Do not add animations by default; if the user requests animations, use them only to reveal reasoning, comparisons, or decision logic step by step during live presentations.
 
 ## Make data and structured information the body of the argument
 
@@ -33,4 +34,3 @@
 8. Table conventions: dark header with white text, extremely thin horizontal separators (no vertical lines or heavy borders), numbers right-aligned and text left-aligned, subject names in the first column bolded; large tables get an interpretation panel beside them.
 9. Line and alignment discipline: all elements align to a unified left edge and invisible column lines; separation uses only extremely thin lines, emphasis uses only primary-color short bars or thick vertical bars, never thick frames; panels are square-cornered with no shadows; rounded corners are allowed only on small labels.
 10. Clean surfaces: no shadows, no gradients, no textures, no glow effects, no default colors; the texture is achieved entirely through whitespace, alignment, a single-hue color scale, and line discipline.
-

@@ -30,6 +30,7 @@ The following are red lines running through the entire deck; they take effect be
 
 The default learning path is: **orientation → comprehension → demonstration → practice → feedback → transfer**. Not every short material needs a separate page for each stage, but when a stage is missing, you must be able to say that the task itself does not call for it — not that the page ran out of space.
 
+- In live teaching, click-triggered animations may progressively present questions and answers, derivations, physical or mathematical processes, operational steps and error correction, or simulated physics or chemistry experiments; each click advances only one learning step, and self-study and printed materials use no animations by default.
 - **Orientation:** explain why this is worth learning, what the learner can do after completing it, and how it relates to the chapters before and after. Use a real problem or scenario instead of grand slogans.
 - **Comprehension:** first give one core definition the learner can retell, then the boundaries, composition, counterexamples, or relationships. New terms must not appear only in figure captions.
 - **Demonstration:** show the process and the intermediate judgments, not just the final answer; put the key forks, the basis for each choice, and the common misconceptions on the same reading path.
