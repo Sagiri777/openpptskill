@@ -25,6 +25,11 @@ test("installs the packaged skill into a custom skills directory", () => {
     assert.equal(result.status, 0, result.stderr);
     assert.equal(existsSync(join(target, "open-kimi-ppt", "SKILL.md")), true);
     assert.equal(existsSync(join(target, "open-kimi-ppt", "scripts", "export_pptx.py")), true);
+    const runtimeCli = join(target, "open-kimi-ppt", "runtime", "bin", "open-kimi-ppt-skills.js");
+    assert.equal(existsSync(runtimeCli), true);
+    const validation = spawnSync(process.execPath, [runtimeCli, "validate", join(projectRoot, "skills", "open-kimi-ppt", "tests", "fixtures", "minimal"), "--json"], { encoding: "utf8" });
+    assert.equal(validation.status, 0, validation.stderr);
+    assert.equal(JSON.parse(validation.stdout).valid, true);
     assert.equal(existsSync(join(target, "open-kimi-ppt", "_user_meta.json")), false);
   } finally {
     rmSync(root, { recursive: true, force: true });
