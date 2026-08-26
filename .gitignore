@@ -13,3 +13,7 @@ __pycache__/
 
 # Local skill install metadata
 _user_meta.json
+
+# Local browser QA artifacts
+.playwright-cli/
+output/

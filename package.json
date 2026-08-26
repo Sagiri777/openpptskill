@@ -1,7 +1,7 @@
 {
   "name": "open-kimi-ppt-skills",
   "version": "1.1.1",
-  "description": "Unofficial reverse-engineered Kimi Slides skill for AI coding agents with local PPTD editing and PPTX export.",
+  "description": "Local PPTD editor, renderer, validator, resource localizer, and editable PPTX exporter.",
   "license": "MIT",
   "author": "binaryify",
   "homepage": "https://github.com/binaryify/open-kimi-ppt-skill#readme",
@@ -26,12 +26,19 @@
     "codebuddy"
   ],
   "type": "module",
+  "main": "lib/pptd-core.js",
+  "exports": {
+    ".": "./lib/pptd-core.js",
+    "./core": "./lib/pptd-core.js",
+    "./core.d.ts": "./lib/pptd-core.d.ts"
+  },
   "bin": {
     "open-kimi-ppt-skills": "bin/open-kimi-ppt-skills.js"
   },
   "files": [
     "bin/",
     "editor/",
+    "desktop/",
     "lib/",
     "skills/open-kimi-ppt/SKILL.md",
     "skills/open-kimi-ppt/reference/",
@@ -43,10 +50,37 @@
   ],
   "scripts": {
     "test": "node --test",
+    "desktop": "electron desktop/main.js",
+    "build:desktop": "electron-builder --mac",
     "pack:check": "npm pack --dry-run",
     "prepublishOnly": "npm test"
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "io.github.binaryify.neodeck-local",
+    "productName": "NeoDeck Local",
+    "asar": true,
+    "files": [
+      "desktop/**",
+      "editor/**",
+      "lib/**",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["universal"]
+        }
+      ],
+      "artifactName": "NeoDeck-Local-${version}-${arch}.${ext}"
+    }
   }
 }

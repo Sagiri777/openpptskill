@@ -135,7 +135,7 @@ npx open-kimi-ppt-skills@latest install --target ~/.claude/skills
 npx open-kimi-ppt-skills serve
 ```
 
-然后打开 <http://127.0.0.1:55173/>，选择包含 `.pptd` 清单、`pages/` 和 `media/` 的完整项目文件夹，即可在浏览器中查看、编辑项目并导出 PPTX。仓库自带的 [example/dji-pocket4](example/dji-pocket4) 是一个完整的 18 页示例项目，可直接打开体验。
+然后打开 <http://127.0.0.1:55173/>，选择包含 `.pptd` 清单、`pages/` 和 `media/` 的完整项目文件夹，即可在浏览器中查看、编辑项目并导出 PPTX。编辑器、渲染器和 OOXML writer 都在本机运行，不需要登录或联网。仓库自带的 [example/dji-pocket4](example/dji-pocket4) 是一个完整的 18 页示例项目，可直接打开体验。
 
 ```bash
 # 启动后自动打开浏览器
@@ -158,6 +158,7 @@ npx open-kimi-ppt-skills serve --port 56000
 - **手动导出**：在编辑器中随时手动导出 PPTX。
 - **格式互转**：将现有 PPTX 转换为 PPTD 后继续修改。
 - **安全可控**：本地编辑仅在用户明确授权的项目目录内读写文件。
+- **完全本地**：安装后解析、渲染和 PPTX 导出不产生网络请求；执行 `localize` 时才会按用户指令下载远程图片或字体。
 
 ## 为什么选 open-kimi-ppt
 
@@ -236,12 +237,12 @@ deck/
 - CLI 只在 `127.0.0.1` 启动静态文件服务，不会监听局域网地址。
 - 浏览器只在用户主动授权后读取完整 PPTD 项目目录。
 - 保存回调只允许修改 `.pptd` 和 `.page` 文件，并拒绝绝对路径与 `..` 路径越界。
-- PPTD 内容由本地宿主交给公开的 Kimi 网页编辑器处理；远程图片、字体和编辑器资源仍可能从对应服务器加载。
-- 本项目不会提供或注入 Kimi 登录令牌，也不会访问用户的 Kimi 私有文稿。
+- PPTD 内容始终由本地解析器、SVG renderer 和 OOXML writer 处理；运行时不会访问第三方服务。
+- 远程图片或字体只有在用户主动执行 `open-kimi-ppt-skills localize` 时才会下载到项目 `media/` 目录。
 
 ## 兼容性说明
 
-这是针对当前公开实现的兼容宿主，不是稳定的官方 SDK。Kimi 更新前端资源哈希、PPTD 格式或 iframe/RPC 协议后，本项目可能需要同步升级。成功生成 PPTX 也不代表 PowerPoint、WPS 和 Keynote 对所有动画效果都能完全一致地播放。
+这是一个本地 PPTD v2 运行时。生成的 PPTX 以 PowerPoint 365 为兼容基准；复杂动画和没有对应 OOXML 原语的图表会以可编辑图形组表达。
 
 ## 本地开发
 

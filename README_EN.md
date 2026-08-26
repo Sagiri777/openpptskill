@@ -123,7 +123,7 @@ Or run it yourself in a terminal:
 npx open-kimi-ppt-skills serve
 ```
 
-Then open <http://127.0.0.1:55173/> and choose a complete project folder containing the `.pptd` manifest, `pages/`, and `media/` to view, edit, and export PPTX in the browser. The bundled [example/dji-pocket4](example/dji-pocket4) project — a complete 18-page deck — is ready to open for a quick tour.
+Then open <http://127.0.0.1:55173/> and choose a complete project folder containing the `.pptd` manifest, `pages/`, and `media/` to view, edit, and export PPTX in the browser. The editor, renderer, and OOXML writer run locally without sign-in or network access. The bundled [example/dji-pocket4](example/dji-pocket4) project — a complete 18-page deck — is ready to open for a quick tour.
 
 ```bash
 # Open the browser after startup
@@ -229,7 +229,7 @@ deck/
 
 ## Compatibility
 
-This is a compatibility host for the current public implementation, not a stable official SDK. Updates to Kimi frontend asset hashes, the PPTD format, or the iframe/RPC protocol may require a corresponding project update. Successfully generating a PPTX does not guarantee identical animation playback in PowerPoint, WPS, and Keynote.
+This is a local PPTD v2 runtime. Generated files target PowerPoint 365; effects without a direct OOXML primitive are represented as editable grouped shapes.
 
 ## Local development
 
