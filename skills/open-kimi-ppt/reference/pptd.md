@@ -1555,7 +1555,8 @@ interface SankeySeries {
 | scatter | `series[].fill` / `marker.fill` | Series level is the marker default color; `marker.fill` takes precedence |
 | bubble | `series[].fill` | Bubble fill color |
 | candlestick | `upBars` / `downBars` (body fill+border) + each overlay series' own `lineColor`/`fill` | The candlestick body maps by up/down; overlay line/bar use their own colors |
-| pie / sunburst / sankey | The single series' `fill` array, cycled by data point/node | Array length cycles and reuses |
+| pie / sankey | The single series' `fill` array, cycled by data point/node | Array length cycles and reuses |
+| sunburst | The single series' `fill` array, cycled by top-level branch | Descendants retain their top-level branch color; array length cycles and reuses |
 | treemap | The single series' `fill` (single value / 1-D array / 2-D array) | Same as pie etc.; child nodes decrease from the parent along the HSL.L dimension (`L_new = max(0, L_old - 10)`) |
 | heatmap | `series[].colorScheme` + `series[].colorScale` | The gradient color scale maps by value; `linear` interpolates between the endpoints, `diverging` aligns three colors at the midpoint |
 | waterfall | `series[].totalBars` / `increaseBars` / `decreaseBars` | Mapped into three classes — total (total columns) / increase / decrease; does not participate in the theme color cycle |

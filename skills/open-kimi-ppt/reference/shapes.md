@@ -40,7 +40,7 @@
 | halfFrame | Half frame | [horizontal thickness, vertical thickness] | [33333, 33333] |
 | corner | Corner | [horizontal thickness, vertical thickness] | [50000, 50000] |
 | diagStripe | Diagonal stripe | [stripe width] | [50000] |
-| foldedCorner | Folded corner | - | - |
+| foldedCorner | Folded corner | [fold size] | [16667] |
 | donut | Donut | [ring width ratio] | [25000] |
 | noSmoking | Prohibition symbol | [slash width] | [18750] |
 | heart | Heart | - | - |
@@ -98,7 +98,7 @@
 | upArrow | Up arrow | [shaft width, arrowhead length] | [50000, 50000] |
 | downArrow | Down arrow | [shaft width, arrowhead length] | [50000, 50000] |
 | leftRightArrow | Left-right arrow | [shaft width, arrowhead length] | [50000, 50000] |
-| upDownArrow | Up-down arrow | [shaft width, up arrowhead length, shaft width, down arrowhead length] | [50000, 50000, 50000, 50000] |
+| upDownArrow | Up-down arrow | [shaft width, arrowhead length] | [50000, 50000] |
 | quadArrow | Quad arrow | [shaft width, arrowhead width, arrowhead length] | [22500, 22500, 22500] |
 | leftRightUpArrow | Left-right-up arrow | [shaft width, arrowhead width, arrowhead length] | [25000, 25000, 25000] |
 | leftUpArrow | Left-up arrow | [shaft width, arrowhead width, arrowhead length] | [25000, 25000, 25000] |
